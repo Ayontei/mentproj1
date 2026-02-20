@@ -104,12 +104,14 @@ WSGI_APPLICATION = 'ment.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mentproj_db',        # Имя базы, которую создали
+        'USER': 'mentuser',            # Имя пользователя
+        'PASSWORD': '0203',    # Пароль, который задали
+        'HOST': 'localhost',            # PostgreSQL на этом же компьютере
+        'PORT': '5432',                 # Стандартный порт
     }
 }
-
-
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
