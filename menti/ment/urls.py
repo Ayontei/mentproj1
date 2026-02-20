@@ -18,9 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 import users.urls
 import posts.urls
+from posts.views import page_not_found
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls, name='admin'),
     path('user/', include(users.urls)),
     path('', include(posts.urls)),
 ]
+
+handler404 = page_not_found
+
+'''Сегодня реализовал JWT авторизацию, прописал пути для генерации  acsess и refresh токенов так же правильную их выдачу при регистрации и авторизации
+Разобрался с системой ролей и доступами к API'''

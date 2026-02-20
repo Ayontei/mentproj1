@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@n#ln-au2as7r-eo##(6dxwsb0cw#_hnmp+7pdj()%61k!mx1$'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
+    'rest_framework',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -67,6 +69,32 @@ TEMPLATES = [
         },
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT по умолчанию
+    ),
+    # ... остальные настройки DRF
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),      # Время жизни access токена
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),        # Время жизни refresh токена
+    "ROTATE_REFRESH_TOKENS": True,                       # Выдавать ли новый refresh при обновлении access
+    "BLACKLIST_AFTER_ROTATION": True,                    # Помещать ли старый refresh в черный список
+    "UPDATE_LAST_LOGIN": False,                           # Обновлять ли дату последнего входа
+
+    "ALGORITHM": "HS256",                                 # Алгоритм шифрования
+    "SIGNING_KEY": SECRET_KEY,                   # Секретный ключ для подписи
+    "VERIFYING_KEY": "",
+    "AUDIENCE": None,
+    "ISSUER": None,
+
+    "AUTH_HEADER_TYPES": ("Bearer",),                     # Тип заголовка авторизации
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",             # Имя заголовка
+    "USER_ID_FIELD": "id",
+    "USER_ID_CLAIM": "user_id",
+}
 
 WSGI_APPLICATION = 'ment.wsgi.application'
 
