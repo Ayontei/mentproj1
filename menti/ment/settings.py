@@ -39,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users.apps.UsersConfig',
     'posts.apps.PostsConfig',
+    'categories.apps.CategoriesConfig',
+    'tags.apps.TagsConfig',
+    'subscriptions.apps.SubscriptionsConfig',
     'rest_framework',
     'rest_framework_simplejwt',
 ]

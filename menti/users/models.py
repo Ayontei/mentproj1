@@ -6,7 +6,7 @@ class Profile(models.Model):
          on_delete=models.CASCADE,
         related_name='profile'
 )
-    subscriber = models.ForeignKey(
+    subscriber = models.OneToOneField(
         User, 
         on_delete=models.SET_NULL,  # или CASCADE
         null=True, 
@@ -14,7 +14,7 @@ class Profile(models.Model):
         unique=True,  # Это гарантирует, что на одного юзера может подписаться только один
         related_name='subscribed_to_me'  # кто подписан на меня
 )
-    subscribed_to = models.ForeignKey(
+    subscribed_to = models.OneToOneField(
         User, 
         on_delete=models.SET_NULL,
         null=True, 

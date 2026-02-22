@@ -48,8 +48,6 @@ class Post(models.Model):
     )
     tags = models.ManyToManyField(
         Tags,
-        null=True,
-        blank=True,
         related_name='tags'
     )
 

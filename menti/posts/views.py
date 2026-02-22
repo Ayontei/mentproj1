@@ -1,31 +1,33 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import Post  # ваша модель
 
 
 
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def index(request):
-    return HttpResponse('Index page')
-
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
-def get_post(request, post_id):
-    return HttpResponse(f'You revice post with id {post_id}')
-
-@api_view(['GET'])
-@permission_classes([AllowAny])
+@api_view(['GET', 'POST'])
+def post_list(request):
+    if request.method == 'GET':
+        return Response({'message':'all post list'})
+    elif request.method == 'POST':
+        if not request.user.is_authenticated:  # или is_superuser
+            return Response({'error': 'Только для авторизованных пользователей'}, status=403)
+        return Response({'message':'your post created'})
+    
+@api_view(['GET','PUT','PATCH', 'DELETE'])
+def get_post(request, id):
+    # Все методы кроме GET требуют админа
+    if request.method != 'GET' and not request.user.is_staff:
+        return Response({'error': 'Только для администраторов'}, status=403)
+    
+    if request.method == 'GET':
+        return Response({'message':f'detail post {id}'})
+    elif request.method == 'PUT':
+        return Response({'message':f'this post update all {id}'})
+    elif request.method == 'PATCH':
+        return Response({'message':f'this post updated {id}'})
+    elif request.method == 'DELETE':
+        return Response({'message':f'this post deleted {id}'})
+    
 def page_not_found(request, exception):
-    return HttpResponseNotFound('<h1>Not found<h1>')
-
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def create_post(request, post_id):
-    return HttpResponse(f'You revice post with id {post_id}')
-
+    return Response({'Err':'Страница не найдена'})
 
