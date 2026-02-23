@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from categories.models import Category
 from tags.models import Tags
 
+
 class Post(models.Model):
     id = models.AutoField(primary_key=True)  # Автоматически создается Django, можно не указывать
     title = models.CharField(
@@ -37,17 +38,21 @@ class Post(models.Model):
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name='articles'  # user.articles.all()
+        related_name='articles',  # user.articles.all()
+        verbose_name="Автор",
+        help_text='Выберите автора'
     )
     categories = models.ForeignKey(
         Category,
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
+        verbose_name="Категория",
         related_name='category'
     )
     tags = models.ManyToManyField(
         Tags,
+        verbose_name="Тэги",
         related_name='tags'
     )
 
@@ -63,9 +68,18 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        # Автоматическое создание slug, если его нет
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-
+def save(self, *args, **kwargs):
+    if not self.slug:
+        # Базовый slug из заголовка
+        base_slug = slugify(self.title)
+        slug = base_slug
+        counter = 1
+        
+        # Проверяем, есть ли уже такой slug
+        while Post.objects.filter(slug=slug).exists():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+            
+        self.slug = slug
+    
+    super().save(*args, **kwargs)

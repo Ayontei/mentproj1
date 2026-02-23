@@ -3,3 +3,5 @@ tests
 .vscode
 __pycache__
 migrations
+.git
+.pre-commit-config.yaml
