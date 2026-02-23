@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -63,6 +63,13 @@ def user_reg(request):
     }, status=status.HTTP_201_CREATED)
 
 @api_view(['GET'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def cab(request):
-    return Response('Your cabinet')
+    user = request.user
+    
+    return Response({
+        'id': user.id,
+        'username': user.username,
+        'email': user.email,
+        'date_joined': user.date_joined
+    })
