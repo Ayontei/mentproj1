@@ -296,6 +296,17 @@ python-jose = ["python-jose (==3.3.0)"]
 test = ["cryptography", "freezegun", "pytest", "pytest-cov", "pytest-django", "pytest-xdist", "tox"]
 
 [[package]]
+name = "docopt"
+version = "0.6.2"
+description = "Pythonic argument parser, that will make you smile"
+optional = false
+python-versions = "*"
+groups = ["main"]
+files = [
+    {file = "docopt-0.6.2.tar.gz", hash = "sha256:49b3a825280bd66b3aa83585ef59c4a8c82f2c8a522dbe754a8bc8d08c85c491"},
+]
+
+[[package]]
 name = "filelock"
 version = "3.24.3"
 description = "A platform independent file lock."
@@ -883,6 +894,24 @@ files = [
 ]
 
 [[package]]
+name = "py-make"
+version = "0.1.2"
+description = "Makefile execution powered by pure Python"
+optional = false
+python-versions = ">=3.7"
+groups = ["main"]
+files = [
+    {file = "py-make-0.1.2.tar.gz", hash = "sha256:03f9cc7e946adbadaf27c08d03ed329192c680166b734e4a5688dc83abdf9521"},
+    {file = "py_make-0.1.2-py3-none-any.whl", hash = "sha256:9b14c17b6b72904ad72d57a75e837e546a20020f8778f561d570c8851d513a62"},
+]
+
+[package.dependencies]
+docopt = ">=0.6.0"
+
+[package.extras]
+dev = ["pytest (>=6)", "pytest-cov", "pytest-timeout", "pytest-xdist"]
+
+[[package]]
 name = "pygments"
 version = "2.19.2"
 description = "Pygments is a syntax highlighting package written in Python."
@@ -1231,4 +1260,4 @@ propcache = ">=0.2.1"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12"
-content-hash = "17e0f325eb034711f0cd483392418f19b75e5493e9b86e141125c23af09d15ed"
+content-hash = "a7275ffe08b25ad770ec226b67558ae352d6fb276a271c3adf454f08da663cb4"

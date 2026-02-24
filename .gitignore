@@ -1,7 +1,13 @@
 .env
+.env/
+.env/*
+!.env.example
 tests
 .vscode
 __pycache__
-migrations
 .git
-.pre-commit-config.yaml
+Lib
+Scripts
+pyvenv.cfg
+.dockerignore
+aiohttsp.py
