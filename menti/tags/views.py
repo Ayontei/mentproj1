@@ -48,4 +48,4 @@ def get_tag(request, tag_id):
         return Response(serializer.errors, status=400)
     elif request.method == 'DELETE':
         tag.delete()
-        return Response({'message': f'Tag {tag_id} deleted'}, status=204)
+        return Response({'message': f'Тэг {tag_id} удален'}, status=204)
