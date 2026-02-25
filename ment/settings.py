@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -44,6 +45,7 @@ INSTALLED_APPS = [
     "subscriptions.apps.SubscriptionsConfig",
     "rest_framework",
     "rest_framework_simplejwt",
+    "drf-yasg",
 ]
 
 MIDDLEWARE = [
@@ -106,11 +108,11 @@ WSGI_APPLICATION = "ment.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "mentproj_db",  # Имя базы, которую создали
-        "USER": "mentuser",  # Имя пользователя
-        "PASSWORD": "0203",  # Пароль, который задали
-        "HOST": "localhost",  # PostgreSQL на этом же компьютере
-        "PORT": "5432",  # Стандартный порт
+        "NAME": os.environ.get("DB_NAME", "mentproj_db"),
+        "USER": os.environ.get("DB_USER", "mentuser"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "0203"),
+        "HOST": os.environ.get("DB_HOST", "db"),  # <-- ВАЖНО: 'db', а не localhost
+        "PORT": "5432",
     }
 }
 # Password validation
@@ -132,6 +134,17 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# Celery settings
+CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672//"  # RabbitMQ
+CELERY_RESULT_BACKEND = "rpc://"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
+
+# Для хранения результатов в БД (опционально)
+# CELERY_RESULT_BACKEND = 'django-db'
 
 
 # Internationalization

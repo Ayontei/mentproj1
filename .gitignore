@@ -11,3 +11,4 @@ Scripts
 pyvenv.cfg
 .dockerignore
 aiohttsp.py
+celerybeat-schedule

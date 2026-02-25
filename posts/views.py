@@ -1,6 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
+from subscriptions.tasks import notify_subscribers
+
 from .models import Post  # ваша модель
 from .serializers import PostSerializer
 
@@ -19,6 +21,13 @@ def post_list(request):
         serializer = PostSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save(author=request.user)  # ← ЗДЕСЬ вызывается save()
+
+            # Асинхронно уведомляем подписчиков
+            if Post.is_published:  # только для опубликованных постов
+                notify_subscribers.delay(
+                    author_id=request.user.id, post_title=Post.title, post_id=Post.id
+                )
+
             return Response(serializer.data, status=201)
 
 
