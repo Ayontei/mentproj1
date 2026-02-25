@@ -9,6 +9,6 @@ __pycache__
 Lib
 Scripts
 pyvenv.cfg
-.dockerignore
 aiohttsp.py
 celerybeat-schedule
+.pytest_cache
