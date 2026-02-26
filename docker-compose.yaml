@@ -37,6 +37,7 @@ services:
       - rabbitmq
       - redis
     environment:
+      DJANGO_SETTINGS_MODULE: ment.settings
       DB_HOST: db
       DB_NAME: mentproj_db
       DB_USER: mentuser

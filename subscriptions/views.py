@@ -32,7 +32,8 @@ def get_status(request, user_id):
 
     if request.method == "GET":
         subscriptions = Sub.objects.filter(
-            subscriber=request.user, is_active=True  # только активные
+            subscriber=request.user,
+            is_active=True,  # только активные
         ).values_list("target_user__username", flat=True)
 
         return Response(list(subscriptions))
@@ -41,9 +42,7 @@ def get_status(request, user_id):
         # Удаляем подписку (или ставим is_active=False)
         deleted = Sub.objects.filter(
             subscriber=request.user, target_user=target_user
-        ).update(
-            is_active=False
-        )  # или .delete()
+        ).update(is_active=False)  # или .delete()
 
         if deleted[0] > 0:
             return Response({"message": f"Вы отписались от {target_user.username}"})

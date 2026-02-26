@@ -22,29 +22,24 @@ def post_list(request):
         # Базовый queryset (только опубликованные посты)
         posts = Post.objects.filter(is_published=True)
 
-        # 🔍 ПОИСК по title и content
         search = request.GET.get("search")
         if search:
             posts = posts.filter(
                 Q(title__icontains=search) | Q(content__icontains=search)
             )
 
-        # 🏷️ ФИЛЬТРАЦИЯ по категории
         category_id = request.GET.get("category")
         if category_id:
             posts = posts.filter(categories_id=category_id)
 
-        # 🏷️ ФИЛЬТРАЦИЯ по тегу
         tag_id = request.GET.get("tag")
         if tag_id:
             posts = posts.filter(tags__id=tag_id)
 
-        # 👤 ФИЛЬТРАЦИЯ по автору
         author_id = request.GET.get("author")
         if author_id:
             posts = posts.filter(author_id=author_id)
 
-        # 📅 ФИЛЬТРАЦИЯ по датам
         created_after = request.GET.get("created_after")
         if created_after:
             posts = posts.filter(created_at__gte=created_after)
@@ -53,7 +48,6 @@ def post_list(request):
         if created_before:
             posts = posts.filter(created_at__lte=created_before)
 
-        # 🔄 СОРТИРОВКА
         ordering = request.GET.get(
             "ordering", "-created_at"
         )  # по умолчанию новые сверху
@@ -64,7 +58,6 @@ def post_list(request):
         else:
             posts = posts.order_by("-created_at")
 
-        # 📄 ПАГИНАЦИЯ
         paginator = PostPagination()
         paginated_posts = paginator.paginate_queryset(posts, request)
         serializer = PostSerializer(paginated_posts, many=True)

@@ -18,9 +18,11 @@ class PostSerializer(serializers.ModelSerializer):
             "slug",
             "tags",
             "updated_at",
-            "author",
+            "author_name",
             "created_at",
             "categories",
+            "categories_name",
+            "tags_list",
         ]
         read_only_fields = [
             "id",

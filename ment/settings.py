@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
+
 import os
 from datetime import timedelta
 from pathlib import Path
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     "subscriptions.apps.SubscriptionsConfig",
     "rest_framework",
     "rest_framework_simplejwt",
-    "drf-yasg",
+    "drf_yasg",
     "django_filters",
 ]
 
@@ -60,6 +61,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "ment.urls"
+
+SWAGGER_USE_COMPAT_RENDERERS = False
 
 TEMPLATES = [
     {

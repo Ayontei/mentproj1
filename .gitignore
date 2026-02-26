@@ -12,3 +12,6 @@ pyvenv.cfg
 aiohttsp.py
 celerybeat-schedule
 .pytest_cache
+.mypy_cache
+.ruff_cache
+migrations
