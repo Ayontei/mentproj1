@@ -17,6 +17,7 @@ class PostSerializer(serializers.ModelSerializer):
             "is_published",
             "slug",
             "tags",
+            "author",
             "updated_at",
             "author_name",
             "created_at",
