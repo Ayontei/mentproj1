@@ -15,4 +15,3 @@ celerybeat-schedule
 .mypy_cache
 .ruff_cache
 migrations
-*.pyc
