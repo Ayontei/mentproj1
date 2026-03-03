@@ -1,0 +1,40 @@
+# Git
+.git
+.gitignore
+.mypy_cache
+.ruff_cache
+
+# Virtual Environment
+.env
+.env/
+.env/*
+!.env.example
+
+# Python cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.coverage
+htmlcov
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# Local files
+Makefile
+req.txt
+aiohttsp.py
+poetry.toml  # если есть
+
+# Static & Media (будут в volumes)
+staticfiles
+media
+db.sqlite3
+
+# Logs
+*.log
