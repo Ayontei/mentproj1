@@ -93,30 +93,6 @@ def test_post_filter_by_category(auth_client):
     assert posts[0]["id"] == post_with_category.id
 
 
-# @pytest.mark.django_db
-# @patch("subscriptions.tasks.logger")  # Мокаем логгер вместо notify_subscribers
-# def test_post_creation_triggers_notification(mock_logger, auth_client):
-#     """Тест: при публикации поста вызывается логирование уведомления"""
-#     url = reverse("post-list")
-
-#     data = {
-#         "title": "Test Post for Notification",
-#         "content": "This post should trigger notification",
-#         "is_published": True,
-#         "slug": "test-notification",
-#     }
-
-#     response = auth_client.post(url, data)
-
-#     assert response.status_code == status.HTTP_201_CREATED
-
-#     # ✅ Проверяем, что логгер был вызван с информацией об уведомлении
-#     mock_logger.info.assert_called_once()
-#     log_message = mock_logger.info.call_args[0][0]
-#     assert "Уведомление" in log_message
-#     assert "Test Post for Notification" in log_message
-
-
 @pytest.mark.django_db
 @patch("subscriptions.tasks.logger")
 def test_draft_post_does_not_trigger_notification(mock_logger, auth_client):
